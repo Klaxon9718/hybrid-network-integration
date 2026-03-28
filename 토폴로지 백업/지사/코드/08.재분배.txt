@@ -1,0 +1,20 @@
+[재분배]
+
+#ISP 4
+conf t
+! 1. OSPF 정보를 EIGRP로 가져오기
+router eigrp 200
+ redistribute ospf 220 metric 10000 100 255 1 1500
+
+
+! 2. EIGRP 정보를 OSPF로 가져오기
+router ospf 220
+ redistribute eigrp 200 subnets
+!
+
+
+
+#GW1, 2
+! static 설정
+ip route 0.0.0.0 0.0.0.0 210.116.20.254
+!

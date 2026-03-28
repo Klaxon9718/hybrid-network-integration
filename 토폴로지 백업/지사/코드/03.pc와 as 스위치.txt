@@ -1,0 +1,139 @@
+[pc와 as 스위치 설정]
+
+[pc ip 부여]
+pc1: ip 192.168.10.1 255.255.255.0 192.168.10.254
+pc2: ip 192.168.20.1 255.255.255.0 192.168.20.254
+pc3: ip 192.168.30.1 255.255.255.0 192.168.30.254
+pc4: ip 192.168.40.1 255.255.255.0 192.168.40.254
+
+
+[as1 스위치]
+en
+conf t
+ho AS1
+!
+
+vlan 10,20,30,40
+vtp mode client
+vtp domain FIN
+vtp password FIN1234
+!
+
+!!!!! 엔드포인트 설정
+interface range ether 1/0
+switchport mode access
+switchport access vlan 10
+spanning-tree portfast	
+spanning-tree bpduguard enable
+switchport trunk encapsulation dot1q
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+
+
+!!!!! etherchanel 설정
+int ra ether 0/0 - 1
+switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no spanning-tree portfast
+ no shutdown
+!
+
+
+
+[as2 스위치]
+en
+conf t
+ho AS2
+!
+
+vtp mode client
+vtp domain FIN
+vtp password FIN1234
+!
+
+!!!!! 엔드포인트 설정
+interface range ether 1/0
+switchport mode access
+switchport access vlan 20
+spanning-tree portfast	
+spanning-tree bpduguard enable
+switchport trunk encapsulation dot1q
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+
+
+!!!!! etherchanel 설정
+int ra ether 0/0 - 1
+switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no spanning-tree portfast
+ no shutdown
+!
+
+
+
+[as3 스위치]
+en
+conf t
+ho AS3
+!
+
+vtp mode client
+vtp domain FIN
+vtp password FIN1234
+!
+
+!!!!! 엔드포인트 설정
+interface range ether 1/0
+switchport mode access
+switchport access vlan 30
+spanning-tree portfast	
+spanning-tree bpduguard enable
+switchport trunk encapsulation dot1q
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+
+
+!!!!! etherchanel 설정
+int ra ether 0/0 - 1
+switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no spanning-tree portfast
+ no shutdown
+!
+
+
+
+[as2 스위치]
+en
+conf t
+ho AS4
+!
+
+vtp mode client
+vtp domain FIN
+vtp password FIN1234
+!
+
+!!!!! 엔드포인트 설정
+interface range ether 1/0
+switchport mode access
+switchport access vlan 40
+spanning-tree portfast	
+spanning-tree bpduguard enable
+switchport trunk encapsulation dot1q
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+
+
+!!!!! etherchanel 설정
+int ra ether 0/0 - 1
+switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no spanning-tree portfast
+ no shutdown
+!

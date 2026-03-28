@@ -1,0 +1,55 @@
+[cpu 100 문제 해결]
+
+#GW
+conf t
+service internal
+interface ethernet 1/0
+ keepalive 0
+conf t
+service internal
+interface ethernet 1/3
+ keepalive 0
+end
+wr
+
+
+#끝단 스위치
+conf t
+service internal
+interface range ethernet 0/0 - 1
+ keepalive 0
+end
+wr
+
+
+
+#DS
+conf t
+interface range e0/0 - 3, e1/1 - 3, e2/2 - 3
+shutdown
+!
+service internal
+interface ethernet 1/0
+ keepalive 0
+interface range ethernet 2/0 - 1
+ keepalive 0
+interface range ethernet 3/0 - 3
+ keepalive 0
+end
+wr
+
+
+
+
+#AS
+conf t
+interface range e0/2 - 3, e1/1 - 3, e2/0 - 3, e3/0 -3
+shutdown
+!
+service internal
+interface range ethernet 0/0 - 1
+ keepalive 0
+interface ethernet 1/0
+ keepalive 0
+end
+wr

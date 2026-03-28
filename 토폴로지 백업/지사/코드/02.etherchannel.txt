@@ -1,0 +1,132 @@
+[ehterchannel 연결]
+
+#DS1
+en
+conf t
+ho DS1
+!
+
+
+!!!!! etherchanel config !!!!!
+int port-channel 30
+switchport
+!
+int ran eth2/0 - 1
+switchport
+switchport trunk encapsulation dot1q
+switchport mode trunk
+channel-protocol pagp
+channel-group 30 mode desirable 
+!
+ip routing
+!
+
+!
+vlan 10,20,30,40
+!
+no ip igmp snooping
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 1,10,20 priority 0      
+spanning-tree vlan 30,40 priority 8192
+!
+interface Port-channel30
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+
+!!!!! VTP 서버 설정 !!!!!
+vtp mode server
+vtp domain FIN
+vtp password FIN1234
+!
+
+
+!!!!! vlan생성
+int vlan 1
+no shutdown
+!
+int vlan 10
+no shutdown
+ ip add 192.168.10.249 255.255.255.0
+!
+int vlan 20
+no shutdown
+ ip add 192.168.20.249 255.255.255.0
+!
+int vlan 30
+no shutdown
+ ip add 192.168.30.249 255.255.255.0
+!
+int vlan 40
+no shutdown
+ ip add 192.168.40.249 255.255.255.0
+!
+
+
+
+
+======================================
+
+#DS2
+en
+conf t
+ho DS2
+!
+
+
+!!!!! etherchanel config !!!!!
+int port-channel 30
+switchport
+!
+int ran eth2/0 - 1
+switchport
+switchport trunk encapsulation dot1q
+switchport mode trunk
+channel-protocol pagp
+channel-group 30 mode desirable 
+!
+ip routing
+
+!
+vlan 10,20,30,40
+!
+no ip igmp snooping
+!
+spanning-tree mode rapid-pvst
+spanning-tree vlan 30,40 priority 0    
+spanning-tree vlan 1,10,20 priority 8192
+!
+interface Port-channel30
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+
+
+!!!!! VTP 서버 설정 !!!!!
+vtp mode server
+vtp domain FIN
+vtp password FIN1234
+!
+
+
+!!!!! vlan생성
+int vlan 1
+no shutdown
+!
+int vlan 10
+no shutdown
+ip add 192.168.10.250 255.255.255.0
+!
+int vlan 20
+no shutdown
+ip add 192.168.20.250 255.255.255.0
+!
+int vlan 30
+no shutdown
+ip add 192.168.30.250 255.255.255.0
+!
+int vlan 40
+no shutdown
+ip add 192.168.40.250 255.255.255.0
+!

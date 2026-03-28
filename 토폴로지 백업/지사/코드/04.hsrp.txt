@@ -1,0 +1,140 @@
+[gw hsrp 설정]
+#DS1,2 
+int e1/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+
+#iou6
+interface range eth 0/1 - 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+#end
+
+
+
+# GW1 
+en
+conf t
+ho GW1 
+!
+
+conf t
+
+interface e1/3
+no sh
+!
+int eth1/0
+no shut
+!
+!(해설: 1번이라는 감시 대상을 만들고, eth1/3의 연결 상태를 지켜보겠다는 설정입니다.)
+track 1 interface eth1/3 line-protocol   
+!
+! 
+interface eth1/0.10
+standby version 2
+ encapsulation dot1q 10
+ ip address 192.168.10.251 255.255.255.0
+ standby 10 ip 192.168.10.254
+ standby 10 priority 120
+  standby 10 timer 1 3         
+ standby 10 preempt delay minimum 60
+ standby 10 track 1 decrement 100      ! (해설: HSRP 10번 그룹에서 1번 객체(eth1/3)의 상태가 나빠지면 우선순위를 100 깎겠다는 설정입니다.)    
+!
+
+interface eth1/0.20
+standby version 2
+ encapsulation dot1q 20
+ ip address 192.168.20.251 255.255.255.0  
+ standby 20 ip 192.168.20.254
+ standby 20 priority 120
+  standby 20 timer 1 3
+ standby 20 preempt delay minimum 60
+ standby 20 track 1 decrement 100 
+!
+
+interface eth1/0.30
+standby version 2
+ encapsulation dot1q 30
+ ip address 192.168.30.251 255.255.255.0
+ standby 30 ip 192.168.30.253
+  standby 30 timer 1 3
+ standby 30 priority 80                 
+ standby 30 preempt
+!
+
+interface eth1/0.40
+standby version 2
+ encapsulation dot1q 40
+ ip address 192.168.40.251 255.255.255.0
+ standby 40 ip 192.168.40.253
+  standby 40 timer 1 3
+ standby 40 priority 80
+ standby 40 preempt
+
+
+
+
+# GW2
+en
+conf t
+ho GW2
+!
+conf t
+!
+interface e1/3
+no sh
+!
+int eth1/0
+no shut
+!
+!(해설: 1번이라는 감시 대상을 만들고, eth1/3의 연결 상태를 지켜보겠다는 설정입니다.)
+track 1 interface eth1/3 line-protocol  
+!
+interface eth1/0.10
+standby version 2
+ encapsulation dot1q 10
+ ip address 192.168.10.252 255.255.255.0 
+ standby 10 ip 192.168.10.254
+ standby 10 timer 1 3
+ standby 10 priority 80
+ standby 10 preempt
+!
+
+interface eth1/0.20
+standby version 2
+ encapsulation dot1q 20
+ ip address 192.168.20.252 255.255.255.0
+ standby 20 ip 192.168.20.254
+ standby 20 priority 80
+ standby 20 timer 1 3
+ standby 20 preempt
+!
+
+interface eth1/0.30
+standby version 2
+ encapsulation dot1q 30
+ ip address 192.168.30.252 255.255.255.0 
+ standby 30 ip 192.168.30.253
+ standby 30 priority 120  
+ standby 30 timer 1 3             
+ standby 30 preempt delay minimum 60
+ standby 30 track 1 decrement 100 
+!
+
+interface eth1/0.40
+standby version 2
+ encapsulation dot1q 40
+ ip address 192.168.40.252 255.255.255.0 
+ standby 40 ip 192.168.40.253
+ standby 40 priority 120
+ standby 40 timer 1 3
+ standby 40 preempt delay minimum 60
+ standby 40 track 1 decrement 100   
+
+
+
+
+####
+show standby brief
