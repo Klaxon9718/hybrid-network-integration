@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd-server-ingress
+  name: argo-server-ingress
   namespace: argocd
   annotations:
     kubernetes.io/ingress.class: nginx
@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - argocd.aws-esk.com
-    secretName: argocd-aws-esk-com-tls
+      - argo.aws-esk.com
+    secretName: argo-aws-esk-com-tls
   rules:
-  - host: argocd.aws-esk.com
+  - host: argo.aws-esk.com
     http:
       paths:
         - path: /
