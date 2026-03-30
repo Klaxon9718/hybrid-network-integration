@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Klaxon9718/hybrid-network-integration.git
     targetRevision: main
-    path: msa/apigateway/k8s
+    path: msa/aws-msa-full-ui-cleaned/msa/apigateway/k8s
   destination:
     server: https://kubernetes.default.svc
     namespace: soldesk
