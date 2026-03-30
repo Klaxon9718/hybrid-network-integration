@@ -10,7 +10,7 @@ spec:
   tls:
   - hosts:
       - argocd.aws-esk.com
-    secretName: argo-aws-esk-com-tls
+    secretName: argocd-aws-esk-com-tls
   rules:
   - host: argocd.aws-esk.com
     http:
