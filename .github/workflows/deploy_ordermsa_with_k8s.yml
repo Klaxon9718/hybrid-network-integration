@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'msa/aws-msa-full-ui-cleaned/msa/**'
+      - 'msa/aws-msa-full-ui-cleaned/**'
 
 jobs:
   build-and-deploy:
