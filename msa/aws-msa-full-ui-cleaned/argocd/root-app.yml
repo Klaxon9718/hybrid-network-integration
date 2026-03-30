@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Klaxon9718/hybrid-network-integration.git
     targetRevision: main
-    path: argocd/apps
+    path: msa/aws-msa-full-ui-cleaned/argocd/apps
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
